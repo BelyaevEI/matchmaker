@@ -50,6 +50,11 @@ func (a *App) Run(ctx context.Context) error {
 	go func() {
 		defer wg.Done()
 
+		err := a.runHTTPServer()
+		if err != nil {
+			log.Fatalf("failed to run http server: %v", err)
+		}
+
 	}()
 
 	// Create a new playing group
@@ -77,9 +82,9 @@ func gracefulShutdown(ctx context.Context, cancel context.CancelFunc, wg *sync.W
 }
 
 func waitSignal() chan os.Signal {
-	sigterm := make(chan os.Signal, 1)
-	signal.Notify(sigterm, syscall.SIGINT, syscall.SIGTERM)
-	return sigterm
+	sig := make(chan os.Signal, 1)
+	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
+	return sig
 }
 
 // Initialization depends
@@ -127,6 +132,23 @@ func (a *App) initHTTPServer(ctx context.Context) error {
 
 	// Handlers
 	route.Post("/users", user.SearchMatch) // Given players for search match
+
+	a.httpServer = &http.Server{
+		Addr:    a.serviceProvider.HTTPConfig().Address(),
+		Handler: route,
+	}
+
+	return nil
+}
+
+// Listen and serve
+func (a *App) runHTTPServer() error {
+	log.Printf("HTTP server is running on %s", a.serviceProvider.HTTPConfig().Address())
+
+	err := a.httpServer.ListenAndServe()
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

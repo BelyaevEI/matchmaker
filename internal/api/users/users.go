@@ -3,11 +3,11 @@ package users
 import "github.com/BelyaevEI/matchmaker/internal/service"
 
 type Implementation struct {
-	usersService service.UserServicer
+	userService service.UserServicer
 }
 
-func NewImplementation(usersService service.UserServicer) *Implementation {
+func NewImplementation(userService service.UserServicer) *Implementation {
 	return &Implementation{
-		usersService: usersService,
+		userService: userService,
 	}
 }
