@@ -19,6 +19,7 @@ import (
 type serviceProvider struct {
 	httpConfig config.HTTPConfig
 	pgConfig   config.PGConfig
+	enfConfig  config.EnvConfig
 
 	dbClient  db.Client
 	txManager db.TxManager
@@ -103,6 +104,7 @@ func (s *serviceProvider) UserService(ctx context.Context) service.UserServicer 
 	if s.userService == nil {
 		s.userService = service.NewService(
 			s.UserRepository(ctx),
+			s.enfConfig.GroupSize(),
 		)
 	}
 
@@ -111,7 +113,7 @@ func (s *serviceProvider) UserService(ctx context.Context) service.UserServicer 
 
 func (s *serviceProvider) UserRepository(ctx context.Context) repository.UserRepositorer {
 	if s.userRepository == nil {
-		s.userRepository = repository.NewRepository(s.DBClient(ctx))
+		s.userRepository = repository.NewRepository(s.DBClient(ctx), s.enfConfig.StorageFlag())
 	}
 
 	return s.userRepository

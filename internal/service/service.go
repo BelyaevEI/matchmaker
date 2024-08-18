@@ -7,15 +7,19 @@ import (
 )
 
 type UserServicer interface {
-	SearchMatch(ctx context.Context) error
+	SearchMatch(ctx context.Context, body []byte) error
 }
 
 // Struct implementation api layer
 type service struct {
 	userRepository repository.UserRepositorer
+	groupSize      int32
 }
 
 // Constructor
-func NewService(userRepository repository.UserRepositorer) UserServicer {
-	return &service{userRepository: userRepository}
+func NewService(userRepository repository.UserRepositorer, groupSize int32) UserServicer {
+	return &service{
+		userRepository: userRepository,
+		groupSize:      groupSize,
+	}
 }
