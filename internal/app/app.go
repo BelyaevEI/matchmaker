@@ -15,13 +15,13 @@ import (
 	"github.com/go-chi/chi"
 )
 
-// Structure application
+// App structure of application
 type App struct {
 	serviceProvider *serviceProvider
 	httpServer      *http.Server
 }
 
-// Create new app with config and depends
+// NewApp create new app with config and depends
 func NewApp(ctx context.Context) (*App, error) {
 	a := &App{}
 
