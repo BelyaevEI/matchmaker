@@ -61,6 +61,13 @@ func (a *App) Run(ctx context.Context) error {
 	go func() {
 		defer wg.Done()
 
+		for {
+			err := a.searchingMatch()
+			if err != nil {
+				log.Fatalf("failed to search match: %v", err)
+			}
+		}
+
 	}()
 
 	gracefulShutdown(ctx, cancel, wg)
@@ -107,7 +114,7 @@ func (a *App) initDependencies(ctx context.Context) error {
 
 // Initialization config
 func (a *App) initConfig(_ context.Context) error {
-	err := config.Load(".env")
+	err := config.Load("config.env")
 	if err != nil {
 		return err
 	}
@@ -131,7 +138,7 @@ func (a *App) initHTTPServer(ctx context.Context) error {
 	user := a.serviceProvider.UsersImpl(ctx)
 
 	// Handlers
-	route.Post("/users", user.SearchMatch) // Given players for search match
+	route.Post("/users", user.AddUserToPool) // Given players for search match
 
 	a.httpServer = &http.Server{
 		Addr:    a.serviceProvider.HTTPConfig().Address(),
@@ -150,5 +157,15 @@ func (a *App) runHTTPServer() error {
 		return err
 	}
 
+	return nil
+}
+
+// Searching new match
+func (a *App) searchingMatch() error {
+	log.Printf("start making new matchs for %v users", a.serviceProvider.enfConfig.GroupSize())
+
+	if err := a.serviceProvider.usersImpl.CreateMatch(context.Background()); err != nil {
+		return err
+	}
 	return nil
 }

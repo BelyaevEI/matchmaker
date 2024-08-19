@@ -104,7 +104,7 @@ func (s *serviceProvider) UserService(ctx context.Context) service.UserServicer 
 	if s.userService == nil {
 		s.userService = service.NewService(
 			s.UserRepository(ctx),
-			s.enfConfig.GroupSize(),
+			s.TxManager(ctx),
 		)
 	}
 
@@ -113,7 +113,10 @@ func (s *serviceProvider) UserService(ctx context.Context) service.UserServicer 
 
 func (s *serviceProvider) UserRepository(ctx context.Context) repository.UserRepositorer {
 	if s.userRepository == nil {
-		s.userRepository = repository.NewRepository(s.DBClient(ctx), s.enfConfig.StorageFlag())
+		s.userRepository = repository.NewRepository(s.DBClient(ctx),
+			s.enfConfig.StorageFlag(),
+			s.enfConfig.GroupSize(),
+		)
 	}
 
 	return s.userRepository
