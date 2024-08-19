@@ -11,6 +11,7 @@ const (
 	storageFlag = "STORAGE"
 )
 
+// EnvConfig entity for config
 type EnvConfig interface {
 	GroupSize() int32
 	StorageFlag() bool
@@ -21,6 +22,7 @@ type envConfig struct {
 	storageFlag bool // true - mem; false - db
 }
 
+// NewEnvConfig constructor
 func NewEnvConfig() (EnvConfig, error) {
 	groupSize, err := strconv.Atoi(os.Getenv(groupSize))
 	if err != nil {

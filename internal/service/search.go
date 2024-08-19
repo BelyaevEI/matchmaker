@@ -10,7 +10,7 @@ import (
 )
 
 // Method add user for search game
-func (s *service) SearchMatch(ctx context.Context, body []byte) error {
+func (s *service) AddUserToPool(ctx context.Context, body []byte) error {
 
 	var user model.User
 

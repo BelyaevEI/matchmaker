@@ -9,14 +9,19 @@ import (
 )
 
 const (
-	tableName     = "user"
-	nameColumn    = "name"
-	skillColumn   = "skill"
-	latencyColumn = "latency"
+	tableName       = "user"
+	nameColumn      = "name"
+	skillColumn     = "skill"
+	latencyColumn   = "latency"
+	createdAtColumn = "created_at"
 )
 
+// UserRepositorer entity for repo layer
 type UserRepositorer interface {
 	AddUserToPool(ctx context.Context, user model.User) error
+	FindOldUser(ctx context.Context) (model.User, error)
+	FindUsersForMatch(ctx context.Context, userOld model.User) ([]model.User, error)
+	DeleteUsers(ctx context.Context, users []model.User) error
 }
 
 // Struct implementation service layer
@@ -24,13 +29,16 @@ type repository struct {
 	db          db.Client
 	poolUsers   []model.User
 	storageFlag bool // true - memory; false - db;
+	groupsize   int32
 	mutex       sync.RWMutex
 }
 
-func NewRepository(db db.Client, storageFlag bool) UserRepositorer {
+// NewRepository constructor
+func NewRepository(db db.Client, storageFlag bool, groupSize int32) UserRepositorer {
 
 	return &repository{
 		db:          db,
 		storageFlag: storageFlag,
+		groupsize:   groupSize,
 	}
 }

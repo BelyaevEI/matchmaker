@@ -6,8 +6,8 @@ import (
 	"net/http"
 )
 
-// Add user to pool for search match
-func (i *Implementation) SearchMatch(writer http.ResponseWriter, request *http.Request) {
+// AddUserToPool Add user to pool for search match
+func (i *Implementation) AddUserToPool(writer http.ResponseWriter, request *http.Request) {
 
 	ctx := request.Context()
 
@@ -18,7 +18,7 @@ func (i *Implementation) SearchMatch(writer http.ResponseWriter, request *http.R
 		return
 	}
 
-	err = i.userService.SearchMatch(ctx, body)
+	err = i.userService.AddUserToPool(ctx, body)
 	if err != nil {
 		writer.WriteHeader(http.StatusInternalServerError)
 		return
