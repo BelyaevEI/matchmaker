@@ -16,6 +16,7 @@ const (
 	createdAtColumn = "created_at"
 )
 
+// UserRepositorer entity for repo layer
 type UserRepositorer interface {
 	AddUserToPool(ctx context.Context, user model.User) error
 	FindOldUser(ctx context.Context) (model.User, error)
@@ -32,6 +33,7 @@ type repository struct {
 	mutex       sync.RWMutex
 }
 
+// NewRepository constructor
 func NewRepository(db db.Client, storageFlag bool, groupSize int32) UserRepositorer {
 
 	return &repository{

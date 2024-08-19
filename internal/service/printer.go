@@ -13,7 +13,7 @@ func (s *service) PrintNewGroup(users []model.User) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
-	s.countGroup += 1
+	s.countGroup++
 
 	// Text for log
 	numberGroup := "Последовательный номер группы - " + strconv.Itoa(int(s.countGroup)) + "\n"

@@ -15,9 +15,9 @@ import (
 func (r *repository) FindUsersForMatch(ctx context.Context, userOld model.User) ([]model.User, error) {
 	if r.storageFlag {
 		return r.findUsersMem(ctx, userOld)
-	} else {
-		return r.findUsersDB(ctx, userOld)
 	}
+
+	return r.findUsersDB(ctx, userOld)
 }
 
 func (r *repository) findUsersMem(_ context.Context, userOld model.User) ([]model.User, error) {

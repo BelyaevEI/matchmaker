@@ -8,6 +8,7 @@ import (
 	"github.com/BelyaevEI/matchmaker/internal/model"
 )
 
+// CheckNotEmpty check struct not empty
 func CheckNotEmpty(user model.User) error {
 
 	if len(user.Name) == 0 {
@@ -25,13 +26,14 @@ func CheckNotEmpty(user model.User) error {
 	return nil
 }
 
+// DistanceMin find min deviations
 func DistanceMin(a, b model.User) float64 {
 	return math.Sqrt(
 		math.Pow(float64(a.Skill-b.Skill), 2) +
 			math.Pow(float64(a.Latency-b.Latency), 2))
 }
 
-// Need use generic
+// InfoSkill Need use generic
 func InfoSkill(users []model.User) (min, max int, avg float64) {
 	if len(users) == 0 {
 		return 0, 0, 0.0
@@ -60,6 +62,7 @@ func InfoSkill(users []model.User) (min, max int, avg float64) {
 	return max, min, avg
 }
 
+// InfoLatency find min, max, avg parameters
 func InfoLatency(users []model.User) (min, max int, avg float64) {
 	if len(users) == 0 {
 		return 0, 0, 0.0
@@ -88,6 +91,7 @@ func InfoLatency(users []model.User) (min, max int, avg float64) {
 	return max, min, avg
 }
 
+// InfoTime find min, max, avg parameters
 func InfoTime(users []model.User) (maxDuration time.Duration, minDuration time.Duration, avgDuration time.Duration) {
 	if len(users) == 0 {
 		return 0, 0, 0

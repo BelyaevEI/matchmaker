@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-// Create match for users
+// CreateMatch Create match for users
 func (i *Implementation) CreateMatch(ctx context.Context) error {
 
 	// Find users

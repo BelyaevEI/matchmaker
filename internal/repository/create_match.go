@@ -17,10 +17,9 @@ func (r *repository) FindOldUser(ctx context.Context) (model.User, error) {
 	// I know that maybe better create two repo
 	if r.storageFlag {
 		return r.findOldUserMem(ctx)
-	} else {
-		return r.findOldUserDB(ctx)
 	}
 
+	return r.findOldUserDB(ctx)
 }
 
 func (r *repository) findOldUserMem(_ context.Context) (model.User, error) {

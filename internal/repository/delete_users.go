@@ -11,9 +11,9 @@ import (
 func (r *repository) DeleteUsers(ctx context.Context, users []model.User) error {
 	if r.storageFlag {
 		return r.deleteUsersMem()
-	} else {
-		return r.deleteUsersDB(ctx, users)
 	}
+
+	return r.deleteUsersDB(ctx, users)
 }
 
 func (r *repository) deleteUsersMem() error {

@@ -33,6 +33,7 @@ func NewApp(ctx context.Context) (*App, error) {
 	return a, nil
 }
 
+// Run application
 func (a *App) Run(ctx context.Context) error {
 
 	// Gracefull shutdown

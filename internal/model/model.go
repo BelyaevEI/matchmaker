@@ -2,6 +2,7 @@ package model
 
 import "time"
 
+// User entity for search match
 type User struct {
 	Name      string    `db:"name"`
 	Skill     int32     `db:"skill"`

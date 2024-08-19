@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-// Add user to pool for search match
+// AddUserToPool Add user to pool for search match
 func (i *Implementation) AddUserToPool(writer http.ResponseWriter, request *http.Request) {
 
 	ctx := request.Context()

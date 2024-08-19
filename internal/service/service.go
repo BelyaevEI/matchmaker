@@ -10,6 +10,7 @@ import (
 	"github.com/BelyaevEI/platform_common/pkg/db"
 )
 
+// UserServicer entity for service layer
 type UserServicer interface {
 	AddUserToPool(ctx context.Context, body []byte) error
 	FindPalyers(ctx context.Context) ([]model.User, error)
@@ -24,7 +25,7 @@ type service struct {
 	mutex          sync.Mutex
 }
 
-// Constructor
+// NewService Constructor
 func NewService(userRepository repository.UserRepositorer,
 	txManager db.TxManager) UserServicer {
 	return &service{
