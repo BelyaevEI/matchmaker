@@ -9,6 +9,11 @@ import (
 )
 
 func (r *repository) DeleteUsers(ctx context.Context, users []model.User) error {
+
+	if len(users) == 0 {
+		return nil
+	}
+
 	if r.storageFlag {
 		return r.deleteUsersMem()
 	}

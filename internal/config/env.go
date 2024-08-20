@@ -2,6 +2,7 @@ package config
 
 import (
 	"errors"
+	"log"
 	"os"
 	"strconv"
 )
@@ -34,6 +35,9 @@ func NewEnvConfig() (EnvConfig, error) {
 		return nil, errors.New("storage flag not found")
 	}
 
+	log.Printf("groupSize %v", groupSize)
+	log.Printf("storageFlag %v", storageFlag)
+
 	return &envConfig{
 		groupSize:   int32(groupSize),
 		storageFlag: storageFlag,
@@ -45,5 +49,6 @@ func (cfg *envConfig) GroupSize() int32 {
 }
 
 func (cfg *envConfig) StorageFlag() bool {
+	log.Println("crash")
 	return cfg.storageFlag
 }

@@ -14,8 +14,9 @@ func (i *Implementation) CreateMatch(ctx context.Context) error {
 		log.Printf("not find users for match, %v", err)
 	}
 
-	// Print about new group
-	i.userService.PrintNewGroup(users)
-
+	if len(users) != 0 {
+		// Print about new group
+		i.userService.PrintNewGroup(users)
+	}
 	return nil
 }
