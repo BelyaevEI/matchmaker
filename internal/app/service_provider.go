@@ -61,8 +61,23 @@ func (s *serviceProvider) PGConfig() config.PGConfig {
 	return s.pgConfig
 }
 
+// Read http config
+func (s *serviceProvider) ENVConfig() config.EnvConfig {
+	if s.enfConfig == nil {
+		cfg, err := config.NewEnvConfig()
+		if err != nil {
+			log.Fatalf("failed to get http config: %s", err.Error())
+		}
+
+		s.enfConfig = cfg
+	}
+
+	return s.enfConfig
+}
+
 // New connect to postgres db
 func (s *serviceProvider) DBClient(ctx context.Context) db.Client {
+
 	if s.dbClient == nil {
 		cl, err := pg.New(ctx, s.PGConfig().DSN())
 		if err != nil {
@@ -112,10 +127,11 @@ func (s *serviceProvider) UserService(ctx context.Context) service.UserServicer 
 }
 
 func (s *serviceProvider) UserRepository(ctx context.Context) repository.UserRepositorer {
+
 	if s.userRepository == nil {
 		s.userRepository = repository.NewRepository(s.DBClient(ctx),
-			s.enfConfig.StorageFlag(),
-			s.enfConfig.GroupSize(),
+			s.ENVConfig().StorageFlag(),
+			s.ENVConfig().GroupSize(),
 		)
 	}
 

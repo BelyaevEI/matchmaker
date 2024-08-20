@@ -163,7 +163,7 @@ func (a *App) runHTTPServer() error {
 
 // Searching new match
 func (a *App) searchingMatch() error {
-	log.Printf("start making new matchs for %v users", a.serviceProvider.enfConfig.GroupSize())
+	log.Printf("start making new matchs for %v users", a.serviceProvider.ENVConfig().GroupSize())
 
 	if err := a.serviceProvider.usersImpl.CreateMatch(context.Background()); err != nil {
 		return err
