@@ -1,15 +1,15 @@
 -- +goose Up
 -- +goose StatementBegin
-CREATE TABLE User
+CREATE TABLE users
 (
     name VARCHAR(255) PRIMARY KEY NOT NULL,
-    skill int
-    latency int
-    created_at TIMESTAMP NOT NULL DEFAULT now(),
+    skill INT,
+    latency INT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 -- +goose StatementEnd
 
 -- +goose Down
 -- +goose StatementBegin
-DROP TABLE User
+DROP TABLE users;
 -- +goose StatementEnd
