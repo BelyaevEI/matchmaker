@@ -1,6 +1,7 @@
 package users
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -10,7 +11,7 @@ import (
 func (i *Implementation) AddUserToPool(writer http.ResponseWriter, request *http.Request) {
 
 	ctx := request.Context()
-
+	fmt.Print("Hello world")
 	body, err := io.ReadAll(request.Body)
 	if err != nil {
 		log.Printf("read body request is failed")

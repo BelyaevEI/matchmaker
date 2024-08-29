@@ -11,7 +11,7 @@ func (i *Implementation) CreateMatch(ctx context.Context) error {
 	// Find users
 	users, err := i.userService.FindPalyers(ctx)
 	if err != nil {
-		log.Printf("not find users for match, %v", err)
+		log.Printf("not found users for match, %v", err)
 	}
 
 	if len(users) != 0 {

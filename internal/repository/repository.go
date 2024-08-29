@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	tableName       = "user"
+	tableName       = "users"
 	nameColumn      = "name"
 	skillColumn     = "skill"
 	latencyColumn   = "latency"
